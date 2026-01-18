@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  service_a:
+    build:
+      context: ./service_a
+      dockerfile: Dockerfile
+    container_name: service_a
+    ports:
+      - "3000:3000"
+    depends_on:
+      - service_b
+    networks:
+      - app-network
+    environment:
+      - SERVICE_B_URL=http://service_b:3000
+
+  service_b:
+    build:
+      context: ./service_b
+      dockerfile: Dockerfile
+    container_name: service_b
+    expose:
+      - "3000"
+    networks:
+      - app-network
+
+  service_c:
+    build:
+      context: ./service_c
+      dockerfile: Dockerfile
+    container_name: service_c
+    expose:
+      - "3000"
+    networks:
+      - app-network
+
+  service_d:
+    build:
+      context: ./service_d
+      dockerfile: Dockerfile
+    container_name: service_d
+    expose:
+      - "3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

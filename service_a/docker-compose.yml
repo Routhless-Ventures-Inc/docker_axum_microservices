@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  service_a:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: service_a
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - SERVICE_B_URL=http://service_b:3000
+
+networks:
+  app-network:
+    driver: bridge
